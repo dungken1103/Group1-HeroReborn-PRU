@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
+<g id="Blocks">
+	<g id="base_9_">
+	</g>
+	<g id="base_8_">
+	</g>
+	<g id="base_7_">
+	</g>
+	<g id="base_6_">
+	</g>
+	<g id="base_5_">
+	</g>
+	<g id="base_4_">
+	</g>
+	<g id="base_3_">
+	</g>
+	<g id="base_2_">
+	</g>
+	<g id="base_1_">
+	</g>
+	<g>
+		<rect y="0" fill="#43F9F6" width="64" height="64"/>
+		<g opacity="0.25">
+			<polygon fill="#3DD9EC" points="15.1,0 0,0 0,15.1 			"/>
+			<polygon fill="#3DD9EC" points="47.1,0 32,0 0,32 0,47.1 			"/>
+			<polygon fill="#3DD9EC" points="64,47.1 64,32 32,64 47.1,64 			"/>
+			<polygon fill="#3DD9EC" points="64,15.1 64,0 64,0 0,64 15.1,64 			"/>
+		</g>
+		<polygon fill="#00A7C4" points="7.5,60.1 3.1,49.3 2.2,26.1 3.4,19.9 0,9.3 0,64 64,64 64,57.5 59.1,61.8 30.3,62.4 		"/>
+		<path fill="#FFFFFF" d="M0,0v5l3.5-1.8c0.6-0.3,1.4-0.5,2.1-0.4l12.6,1.4L32,2.7l15.5,1.5l5,1.7h6.6l4.9,6.3l-3.1,12.2L64,43.1V56
+			v8V0H0z"/>
+	</g>
+	<g id="base">
+	</g>
+</g>
+<g id="UI">
+	<g id="block_4_">
+	</g>
+	<g id="block_3_">
+	</g>
+	<g id="block">
+	</g>
+	<g id="block_2_">
+	</g>
+	<g id="block_1_">
+	</g>
+</g>
+<g id="objects">
+</g>
+</svg>

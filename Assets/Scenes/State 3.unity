@@ -5052,7 +5052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ca4609301f0364f87528c79403c27a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rocketPrefab: {fileID: 3113864380700747536, guid: 3063ce4060184d445844bfbe1bfd2c7e, type: 3}
+  rocketPrefab: {fileID: 5918053150334335543, guid: a642aab1a4cde6643be5421fb0c6878a, type: 3}
   fireRate: 2
 --- !u!61 &1440399025
 BoxCollider2D:
