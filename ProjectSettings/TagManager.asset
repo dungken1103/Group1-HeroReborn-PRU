@@ -7,6 +7,7 @@ TagManager:
   - Wall
   - Enemy
   - Bomb
+  - PlayerMap1
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Player2
   - Player3
   - Player4
-  - 
+  - Ground
   - 
   - 
   - 
@@ -52,6 +53,18 @@ TagManager:
     locked: 0
   - name: FireBoss
     uniqueID: 426442735
+    locked: 0
+  - name: PlayerMap1
+    uniqueID: 293511101
+    locked: 0
+  - name: New Layer 5
+    uniqueID: 2538485093
+    locked: 0
+  - name: New Layer 6
+    uniqueID: 868468385
+    locked: 0
+  - name: New Layer 7
+    uniqueID: 1881017049
     locked: 0
   m_RenderingLayers:
   - Default
