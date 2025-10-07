@@ -15,9 +15,9 @@ public class MainMenu : MonoBehaviour {
     public GameObject aboutUs;
     public GameObject StoryUI;
 
-    public CanvasGroup logoPanel;  // UI của logo
-    public CanvasGroup menuPanel;  // UI của menu chính
-    public float fadeDuration = 1.5f; // Thời gian fade in/out
+    public CanvasGroup logoPanel;  
+    public CanvasGroup menuPanel;  
+    public float fadeDuration = 1.5f; 
 
     void Start()
     {
@@ -31,11 +31,9 @@ public class MainMenu : MonoBehaviour {
 
 
 
-        // Kiểm tra trạng thái âm thanh đã lưu
         bool isMuted = PlayerPrefs.GetInt("MuteSound", 0) == 1;
         AudioListener.volume = isMuted ? 0f : 1f;
 
-        // Cập nhật trạng thái UI Toggle
         if (muteToggle != null)
         {
             muteToggle.isOn = isMuted;
@@ -45,7 +43,6 @@ public class MainMenu : MonoBehaviour {
 
     public void ToggleSound(bool isMuted)
     {
-        // Lưu trạng thái âm thanh vào PlayerPrefs
         PlayerPrefs.SetInt("MuteSound", isMuted ? 1 : 0);
         PlayerPrefs.Save();
 

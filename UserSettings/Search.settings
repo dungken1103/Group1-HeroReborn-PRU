@@ -5,6 +5,14 @@ fetchPreview = true
 defaultFlags = 0
 keepOpen = true
 queryFolder = "Assets"
+<<<<<<< HEAD
+onBoardingDoNotAskAgain = true
+showPackageIndexes = false
+showStatusBar = false
+scopes = {
+}
+providers = {
+=======
 onBoardingDoNotAskAgain = false
 showPackageIndexes = false
 showStatusBar = false
@@ -65,6 +73,7 @@ providers = {
 		priority = 210
 		defaultAction = null
 	}
+>>>>>>> c3bb045d9a31dc5e05f464f878f5be34d483ccc4
 }
 objectSelectors = {
 }
