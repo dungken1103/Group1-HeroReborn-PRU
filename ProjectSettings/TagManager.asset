@@ -25,7 +25,7 @@ TagManager:
   - Player2
   - Player3
   - Player4
-  - Enemy
+  - 
   - 
   - 
   - 
@@ -52,9 +52,6 @@ TagManager:
     locked: 0
   - name: FireBoss
     uniqueID: 426442735
-    locked: 0
-  - name: Enemy
-    uniqueID: 1172160281
     locked: 0
   m_RenderingLayers:
   - Default
