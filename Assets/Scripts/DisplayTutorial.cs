@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class DisplayTutorial : MonoBehaviour
 {
     public GameObject uiControler;
-    public GameObject detailControler;
     public GameObject detailModeGame;
     public GameObject menuMain;
     public GameObject displayTutorial;
@@ -41,14 +40,12 @@ public class DisplayTutorial : MonoBehaviour
     {
         players = GameObject.FindGameObjectsWithTag("Player");
         uiControler.SetActive(true);
-        detailControler.SetActive(false);
         detailModeGame.SetActive(false);
     }
 
 
     public void Controler()
     {
-        detailControler.SetActive(true);
         uiControler.SetActive(false);
     }
 
@@ -60,7 +57,6 @@ public class DisplayTutorial : MonoBehaviour
 
     public void OnExitClickedInTutorial()
     {
-        detailControler.SetActive(false);
         detailModeGame.SetActive(false);
         uiControler.SetActive(false);
         displayTutorial.SetActive(false);
