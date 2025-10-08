@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Bomb
   - PlayerMap1
+  - Coin
+  - Trap
   layers:
   - Default
   - TransparentFX
@@ -54,17 +56,20 @@ TagManager:
   - name: FireBoss
     uniqueID: 426442735
     locked: 0
+  - name: BackGround
+    uniqueID: 868468385
+    locked: 0
+  - name: ForeGround
+    uniqueID: 2538485093
+    locked: 0
   - name: PlayerMap1
     uniqueID: 293511101
     locked: 0
-  - name: New Layer 5
-    uniqueID: 2538485093
+  - name: Item
+    uniqueID: 4200085293
     locked: 0
-  - name: New Layer 6
-    uniqueID: 868468385
-    locked: 0
-  - name: New Layer 7
-    uniqueID: 1881017049
+  - name: UI
+    uniqueID: 3589169407
     locked: 0
   m_RenderingLayers:
   - Default

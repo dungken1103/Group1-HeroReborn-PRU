@@ -20,6 +20,7 @@ public class PlayerMap1Controller : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        rb.freezeRotation = true;
     }
 
     void Start()
