@@ -10,6 +10,7 @@ TagManager:
   - PlayerMap1
   - Coin
   - Trap
+  - EnemyMap1
   layers:
   - Default
   - TransparentFX
@@ -61,6 +62,9 @@ TagManager:
     locked: 0
   - name: ForeGround
     uniqueID: 2538485093
+    locked: 0
+  - name: Enemy
+    uniqueID: 1725885249
     locked: 0
   - name: PlayerMap1
     uniqueID: 293511101

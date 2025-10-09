@@ -22,6 +22,10 @@ public class PlayerCollision : MonoBehaviour
         {
             gameManagerMap1.GameOver();
         }
+        else if(collision.CompareTag("EnemyMap1"))
+        {
+            gameManagerMap1.GameOver();
+        }
     }
 }
     

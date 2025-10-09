@@ -22,8 +22,12 @@ public class GameManagerMap1 : MonoBehaviour
     
     public void AddScore(int points)
     {
-        score += points;
-        UpdateScore();
+        if(!isGameOver)
+        {
+            score += points;
+            UpdateScore();
+        }
+            
     }
 
     private void UpdateScore()
@@ -47,4 +51,6 @@ public class GameManagerMap1 : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("Map1");
     }
+
+    public bool IsGameOver() => isGameOver;
 }

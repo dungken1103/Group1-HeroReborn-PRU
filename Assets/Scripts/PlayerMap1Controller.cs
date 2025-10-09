@@ -15,11 +15,13 @@ public class PlayerMap1Controller : MonoBehaviour
 
     private bool isGrounded;
     private Rigidbody2D rb;
+    private GameManagerMap1 gameManagerMap1;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        gameManagerMap1 = FindAnyObjectByType<GameManagerMap1>();
         rb.freezeRotation = true;
     }
 
@@ -30,6 +32,10 @@ public class PlayerMap1Controller : MonoBehaviour
 
     void Update()
     {
+        if (gameManagerMap1.IsGameOver()) return;
+        {
+            
+        }
         HandleMovement();
         HandleJump();
         UpdateAnimation();
