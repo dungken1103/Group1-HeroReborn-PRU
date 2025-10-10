@@ -77,6 +77,9 @@ public class MainCharacter : MonoBehaviour
             return; 
         }
         bool isRunning = Mathf.Abs(rb.linearVelocity.x) > 0.1f;
+
+        Debug.Log("isRunning: " + isRunning + ", isGrounded: " + isGrounded);
+
         bool isJumping = !isGrounded;
         bool isIdle = !isRunning && !isJumping;
         animator.SetBool("isIdle", isIdle);
