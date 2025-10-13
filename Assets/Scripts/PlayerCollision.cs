@@ -27,5 +27,14 @@ public class PlayerCollision : MonoBehaviour
             gameManagerMap1.GameOver();
         }
     }
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        Transform root = col.collider.attachedRigidbody ? col.collider.attachedRigidbody.transform : col.collider.transform;
+
+        if (root.CompareTag("EnemyMap1") || root.CompareTag("Trap"))
+        {
+            gameManagerMap1.GameOver();
+        }
+    }
 }
     

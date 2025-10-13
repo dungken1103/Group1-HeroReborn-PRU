@@ -11,6 +11,7 @@ TagManager:
   - Coin
   - Trap
   - EnemyMap1
+  - PlayerBullet
   layers:
   - Default
   - TransparentFX
@@ -71,6 +72,18 @@ TagManager:
     locked: 0
   - name: Item
     uniqueID: 4200085293
+    locked: 0
+  - name: Gun
+    uniqueID: 663163879
+    locked: 0
+  - name: Bullet
+    uniqueID: 1166704401
+    locked: 0
+  - name: Animal
+    uniqueID: 299563137
+    locked: 0
+  - name: Egg
+    uniqueID: 3052341489
     locked: 0
   - name: UI
     uniqueID: 3589169407
