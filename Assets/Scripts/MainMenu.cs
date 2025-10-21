@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class MainMenu : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class MainMenu : MonoBehaviour
     public GameObject UItutorial;
     public GameObject aboutUs;
     public GameObject StoryUI;
-
+    public VideoPlayer videoPlayer;
     public CanvasGroup logoPanel;
     public CanvasGroup menuPanel;
     public float fadeDuration = 1.5f;
@@ -55,10 +56,20 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         menuMain.SetActive(false);
-        menuPlay.SetActive(true);
+        menuPlay.SetActive(false);
         menuSetting.SetActive(false);
+        PlayIntroVideo();
+    }
+    public void PlayIntroVideo()
+    {
+        videoPlayer.Play();
+        videoPlayer.loopPointReached += OnVideoFinished;
     }
 
+    void OnVideoFinished(VideoPlayer videoPlayer)
+    {
+        SceneManager.LoadScene("FirstMap");
+    }
     public void Level1()
     {
         SceneManager.LoadScene("State 4");
