@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour {
+public class MainMenu : MonoBehaviour
+{
 
     public Toggle muteToggle;
 
@@ -15,9 +16,9 @@ public class MainMenu : MonoBehaviour {
     public GameObject aboutUs;
     public GameObject StoryUI;
 
-    public CanvasGroup logoPanel;  
-    public CanvasGroup menuPanel;  
-    public float fadeDuration = 1.5f; 
+    public CanvasGroup logoPanel;
+    public CanvasGroup menuPanel;
+    public float fadeDuration = 1.5f;
 
     void Start()
     {
@@ -58,6 +59,11 @@ public class MainMenu : MonoBehaviour {
         menuSetting.SetActive(false);
     }
 
+    public void Level1()
+    {
+        SceneManager.LoadScene("State 4");
+    }
+
     public void SwiftGame()
     {
 
@@ -68,7 +74,7 @@ public class MainMenu : MonoBehaviour {
     public void BattleGroundGame()
     {
 
-        PlayerPrefs.SetString("NextScene", "BattleGroundGame"); 
+        PlayerPrefs.SetString("NextScene", "BattleGroundGame");
         SceneManager.LoadScene("LoadingScene");
     }
 
@@ -107,7 +113,7 @@ public class MainMenu : MonoBehaviour {
 
     public void OnExitClicked()
     {
-        menuPlay.SetActive(false); 
+        menuPlay.SetActive(false);
         menuMain.SetActive(true);
     }
 

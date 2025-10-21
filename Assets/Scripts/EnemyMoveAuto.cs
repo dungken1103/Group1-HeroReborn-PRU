@@ -7,7 +7,7 @@ public class EnemyMoveAuto : MonoBehaviour
     public float changeTime = 2f;
     public bool isBoss = false;
     public GameObject itemPrefab;
-    public int scoreValue = 100; // Điểm mỗi khi tiêu diệt enemy
+    public int scoreValue = 100;
 
     private Vector2 movementDirection;
     private Rigidbody2D rb;
@@ -23,9 +23,7 @@ public class EnemyMoveAuto : MonoBehaviour
     {
         timer -= Time.deltaTime;
         if (timer <= 0)
-        {
             ChangeDirection();
-        }
     }
 
     void FixedUpdate()
@@ -51,19 +49,15 @@ public class EnemyMoveAuto : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Explosion"))
         {
             if (isBoss && itemPrefab != null)
-            {
                 Instantiate(itemPrefab, transform.position, Quaternion.identity);
-            }
 
-            // 🔴 **Gọi coroutine để trì hoãn việc cộng điểm**
             StartCoroutine(DestroyEnemy());
         }
     }
 
-    // 🔥 **Coroutine giúp cộng điểm sau 1 giây trước khi xóa enemy**
     IEnumerator DestroyEnemy()
     {
-        yield return new WaitForSeconds(0.1f); // Chờ 1 giây
+        yield return new WaitForSeconds(0.1f);
 
         if (GameManager.Instance != null)
         {
@@ -71,6 +65,18 @@ public class EnemyMoveAuto : MonoBehaviour
             Debug.Log("Đã cộng điểm: " + scoreValue);
         }
 
-        Destroy(gameObject); // Xóa enemy
+        var parentMap = GetComponentInParent<MapController>();
+        if (parentMap == null)
+            Debug.LogWarning($"{name}: ❌ Không tìm thấy MapController cha!");
+
+        transform.SetParent(null);
+
+        if (parentMap != null)
+        {
+            Debug.Log($"🟢 Gọi {parentMap.name}.CheckEnemiesRemaining() NGAY TRƯỚC destroy");
+            parentMap.CheckEnemiesRemaining();
+        }
+
+        Destroy(gameObject);
     }
 }
