@@ -1,6 +1,9 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 
 public class DinoGameManager : MonoBehaviour
 {
@@ -11,11 +14,14 @@ public class DinoGameManager : MonoBehaviour
 
     public TextMeshProUGUI gameOverText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI winText;
 
     public Button retryButton;
 
     private Dinosaur player;
     private Spawner spawner;
+    private bool nextMapTriggered = false;
+
 
     private float score;
     private void Awake()
@@ -62,6 +68,7 @@ public class DinoGameManager : MonoBehaviour
         spawner.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(false);
         retryButton.gameObject.SetActive(false);
+        winText.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -69,6 +76,11 @@ public class DinoGameManager : MonoBehaviour
         //gameSpeed += gameSpeedIncrease + Time.deltaTime;
         score += gameSpeed * Time.deltaTime;
         scoreText.text = Mathf.FloorToInt(score).ToString("D5");
+        if (!nextMapTriggered && score >= 200)
+        {
+            nextMapTriggered = true;
+            StartCoroutine(GoNextMap());
+        }
     }
 
     public void GameOver()
@@ -80,5 +92,14 @@ public class DinoGameManager : MonoBehaviour
         spawner.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(true);
         retryButton.gameObject.SetActive(true);
+    }
+
+    private IEnumerator GoNextMap()
+    {
+        player.gameObject.SetActive(false);
+        spawner.gameObject.SetActive(false);
+        winText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("Map3");
     }
 }
