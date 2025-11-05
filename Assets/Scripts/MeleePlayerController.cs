@@ -2,72 +2,80 @@
 
 public class MeleePlayerController : MonoBehaviour
 {
+    // Bạn có thể chỉnh tốc độ này trong Inspector
     public float moveSpeed = 5f;
-    public int maxHealth = 100;
-    public int attackDamage = 20;
-    public float attackRange = 0.8f;
-    public Transform attackPoint;
-    public LayerMask enemyLayer;
+    public float jumpForce = 5f; // Lực nhảy
 
-    private int currentHealth;
     private Rigidbody2D rb;
-    private Animator anim;
+    private Animator animator; // Để đổi animation
+    private float moveInput;
+    private bool isGrounded; // Biến kiểm tra xem có chạm đất không
+    private bool isFacingRight = true; // BiBIến kiểm tra hướng mặt
+
+    // Dùng để kiểm tra "chạm đất"
+    public Transform groundCheck;
+    public LayerMask groundLayer;
+    public float checkRadius = 0.2f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        currentHealth = maxHealth;
+        animator = GetComponent<Animator>(); // Lấy component Animator
     }
 
     void Update()
     {
-        Move();
+        // 1. Lấy Input di chuyển (A/D hoặc mũi tên trái/phải)
+        moveInput = Input.GetAxis("Horizontal"); // Trả về giá trị từ -1 đến 1
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        // 2. Lấy Input nhảy (Nút Space)
+        // Kiểm tra chạm đất
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
+        if (isGrounded)
         {
-            Attack();
+            // Nếu chạm đất, set IsJumping là false
+            animator.SetBool("IsJumping", false);
+        }
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            // Kích hoạt animation nhảy (nếu có)
+            // animator.SetTrigger("Jump"); 
+            animator.SetBool("IsJumping", true); // BÁO CÁO CHO ANIMATOR
+        }
+
+        // 3. Cập nhật Animator
+        // Nếu di chuyển, "Speed" > 0, Animator sẽ chuyển sang state "Walk"
+        // Nếu đứng yên, "Speed" = 0, Animator sẽ chuyển sang state "Idle"
+        animator.SetFloat("Speed", Mathf.Abs(moveInput));
+        if (Input.GetKey(KeyCode.J)) 
+        {
+            animator.SetTrigger("Attack"); // BÁO CÁO CHO ANIMATOR
+        }
+        // 4. Lật mặt nhân vật
+        if (!isFacingRight && moveInput > 0)
+        {
+            Flip();
+        }
+        else if (isFacingRight && moveInput < 0)
+        {
+            Flip();
         }
     }
 
-    void Move()
+    void FixedUpdate()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        rb.linearVelocity = new Vector2(moveX * moveSpeed, rb.linearVelocity.y);
-
-        anim.SetFloat("Speed", Mathf.Abs(moveX));
-
-        // Flip hướng nhân vật
-        if (moveX != 0)
-            transform.localScale = new Vector3(Mathf.Sign(moveX), 1, 1);
+        // 5. Áp dụng vật lý để di chuyển
+        // (Dùng FixedUpdate cho các thao tác vật lý)
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
     }
 
-    void Attack()
+    // Hàm lật mặt
+    void Flip()
     {
-        anim.SetTrigger("Attack");
-
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
-        foreach (var enemy in hitEnemies)
-        {
-            enemy.GetComponent<MeleeEnemyController>().TakeDamage(attackDamage);
-        }
-    }
-
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
-        {
-            anim.SetBool("Dead", true);
-            rb.linearVelocity = Vector2.zero;
-            this.enabled = false;
-        }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        isFacingRight = !isFacingRight;
+        Vector3 scaler = transform.localScale;
+        scaler.x *= -1; // Lật theo trục X
+        transform.localScale = scaler;
     }
 }

@@ -1,70 +1,66 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MeleeEnemyController : MonoBehaviour
 {
-    public float moveSpeed = 2f;
-    public int maxHealth = 50;
     public int attackDamage = 10;
-    public float attackRange = 1f;
-    public float detectRange = 5f;
-    public float attackCooldown = 1.5f;
-    public Transform player;
+    public float attackCooldown = 2f; // Tấn công mỗi 2 giây
 
-    private int currentHealth;
-    private float lastAttackTime;
-    private Rigidbody2D rb;
-    private Animator anim;
+    private Animator animator;
+    private MeleeHealthController playerHealth; // Để lưu trữ script Health của Player
+    private bool playerInRange = false; // Player có trong tầm đánh không?
+    private float lastAttackTime = 0f;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        currentHealth = maxHealth;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (player == null) return;
-        float distance = Vector2.Distance(transform.position, player.position);
-
-        if (distance <= detectRange && distance > attackRange)
-        {
-            MoveTowardsPlayer();
-        }
-        else if (distance <= attackRange)
+        // Nếu Player trong tầm và đã đến lúc tấn công
+        if (playerInRange && Time.time > lastAttackTime + attackCooldown)
         {
             Attack();
         }
-        else
+    }
+
+    // Hàm này được gọi khi có gì đó đi vào "vùng nhận diện" (cái Circle Collider lớn)
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // Kiểm tra xem có phải Player không
+        if (other.CompareTag("Player"))
         {
-            anim.SetFloat("Speed", 0);
-            rb.linearVelocity = Vector2.zero;
+            Debug.Log("Player da vao vung phat hien!");
+            playerInRange = true;
+            // Lấy script Health của Player để sẵn
+            playerHealth = other.GetComponent<MeleeHealthController>();
         }
     }
 
-    void MoveTowardsPlayer()
+    // Hàm này được gọi khi Player đi ra khỏi "vùng nhận diện"
+    void OnTriggerExit2D(Collider2D other)
     {
-        Vector2 dir = (player.position - transform.position).normalized;
-        rb.linearVelocity = new Vector2(dir.x * moveSpeed, 0);
-        anim.SetFloat("Speed", Mathf.Abs(dir.x));
-        transform.localScale = new Vector3(Mathf.Sign(dir.x), 1, 1);
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player da roi khoi vung!");
+            playerInRange = false;
+            playerHealth = null; // Xóa tham chiếu
+        }
     }
 
     void Attack()
     {
-        if (Time.time - lastAttackTime < attackCooldown) return;
-        anim.SetTrigger("Attack");
-        player.GetComponent<MeleePlayerController>().TakeDamage(attackDamage);
         lastAttackTime = Time.time;
-    }
+        animator.SetTrigger("Attack"); // Kích hoạt animation "Attack"
 
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        // Gây sát thương
+        if (playerHealth != null)
         {
-            anim.SetTrigger("Die");
-            Destroy(gameObject, 1f);
+            // Trong thực tế, bạn nên có một hàm (ví dụ: OnAttackFrame)
+            // được gọi từ Animation Event để gây sát thương đúng lúc
+            // Nhưng cách đơn giản là gây sát thương ngay lập tức
+            playerHealth.TakeDamage(attackDamage);
+            Debug.Log("Enemy tan cong Player!");
         }
     }
 }
