@@ -1,6 +1,7 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class GameManagerMap1 : MonoBehaviour
 {
     public int score = 0;
@@ -9,6 +10,7 @@ public class GameManagerMap1 : MonoBehaviour
     [SerializeField]
     private GameObject gameOver;
     private bool isGameOver = false;
+
     void Start()
     {
         UpdateScore();
@@ -17,17 +19,16 @@ public class GameManagerMap1 : MonoBehaviour
 
     void Update()
     {
-        
+
     }
-    
+
     public void AddScore(int points)
     {
-        if(!isGameOver)
+        if (!isGameOver)
         {
             score += points;
             UpdateScore();
         }
-            
     }
 
     private void UpdateScore()
@@ -53,4 +54,10 @@ public class GameManagerMap1 : MonoBehaviour
     }
 
     public bool IsGameOver() => isGameOver;
+
+    // Getter method to access the score
+    public int GetScore()
+    {
+        return score;
+    }
 }

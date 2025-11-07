@@ -90,5 +90,8 @@ TagManager:
   - name: Animal
     uniqueID: 299563137
     locked: 0
+  - name: New Layer 14
+    uniqueID: 4163731799
+    locked: 0
   m_RenderingLayers:
   - Default
