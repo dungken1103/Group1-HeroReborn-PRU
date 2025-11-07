@@ -1702,9 +1702,6 @@ PrefabInstance:
       addedObject: {fileID: 2045209207}
     - targetCorrespondingSourceObject: {fileID: 3227720078696530851, guid: 4bcf89835aeca594a805add97965839d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2045209206}
-    - targetCorrespondingSourceObject: {fileID: 3227720078696530851, guid: 4bcf89835aeca594a805add97965839d, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2045209208}
     - targetCorrespondingSourceObject: {fileID: 3227720078696530851, guid: 4bcf89835aeca594a805add97965839d, type: 3}
       insertIndex: -1
@@ -13635,20 +13632,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3227720078696530851, guid: 4bcf89835aeca594a805add97965839d, type: 3}
   m_PrefabInstance: {fileID: 613408549}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2045209206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2045209202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea73dff3de31e14449e2d196cacfec2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySlam
-  slamSpeed: 3
-  slamRange: 6
 --- !u!114 &2045209207
 MonoBehaviour:
   m_ObjectHideFlags: 0
