@@ -99,7 +99,7 @@ public class DinoGameManager : MonoBehaviour
         player.gameObject.SetActive(false);
         spawner.gameObject.SetActive(false);
         winText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("Map3");
     }
 }
