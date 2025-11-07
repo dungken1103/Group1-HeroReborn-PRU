@@ -34,7 +34,7 @@ TagManager:
   - Player4
   - Ground
   - Door
-  - 
+  - MeleeGround
   - 
   - 
   - 
@@ -90,8 +90,25 @@ TagManager:
   - name: Animal
     uniqueID: 299563137
     locked: 0
+<<<<<<< HEAD
   - name: New Layer 14
     uniqueID: 4163731799
+=======
+  - name: Melee_Background_Far
+    uniqueID: 1161064217
+    locked: 0
+  - name: Melee_Background_Mid
+    uniqueID: 1761568253
+    locked: 0
+  - name: Melee_Main
+    uniqueID: 3785147497
+    locked: 0
+  - name: Melee_Foreground
+    uniqueID: 1830950259
+    locked: 0
+  - name: Melee_Ground
+    uniqueID: 100876389
+>>>>>>> d5c48d4a096e3fc8c79b535b6bd61b7f1c7318b6
     locked: 0
   m_RenderingLayers:
   - Default
