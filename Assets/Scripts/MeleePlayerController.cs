@@ -38,7 +38,7 @@ public class MeleePlayerController : MonoBehaviour
             animator.SetBool("IsJumping", false);
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetButtonDown("Jump")) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             animator.SetBool("IsJumping", true);
