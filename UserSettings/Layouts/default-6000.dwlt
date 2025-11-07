@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 960
+    x: 0
     y: 42
     width: 1440
     height: 810
@@ -380,8 +380,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Animation\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1548.5
-    y: 659
+    x: 1
+    y: 605
     width: 220.5
     height: 147
   m_SerializedDataModeController:
@@ -695,8 +695,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Tile Palette\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1548.5
-    y: 396.5
+    x: 1
+    y: 342.5
     width: 220.5
     height: 236.5
   m_SerializedDataModeController:
@@ -759,8 +759,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Hierarchy\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1548.5
-    y: 78
+    x: 1
+    y: 24
     width: 220.5
     height: 292.5
   m_SerializedDataModeController:
@@ -777,7 +777,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: ec240000
+      m_SelectedIDs: 
       m_LastClickedID: 0
       m_ExpandedIDs: 96efffff20f2ffff40f3ffffe0f5ffffeafaffff
       m_RenameOverlay:
@@ -825,8 +825,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 2004
-    y: 78
+    x: 1045
+    y: 24
     width: 395
     height: 728
   m_SerializedDataModeController:
@@ -874,8 +874,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Project\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1771
-    y: 78
+    x: 812
+    y: 24
     width: 231
     height: 728
   m_SerializedDataModeController:
@@ -918,7 +918,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: b0230000
     m_LastClickedID: 9136
-    m_ExpandedIDs: 00000000f88d0000fa8d0000fc8d0000fe8d0000008e0000028e0000048e0000068e0000088e0000
+    m_ExpandedIDs: 00000000e28700009e8b0000a08b0000a28b0000a48b0000a68b0000a88b0000aa8b0000ac8b0000ae8b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -947,21 +947,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000f88d0000fa8d0000fc8d0000fe8d0000008e0000028e0000048e0000068e0000088e0000e48e0000
+    m_ExpandedIDs: 00000000e28700009e8b0000a08b0000a28b0000a48b0000a68b0000a88b0000aa8b0000ac8b0000ae8b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: DinoGameManager
-      m_OriginalName: DinoGameManager
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 9452
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 11}
@@ -1026,8 +1026,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 960
-    y: 481
+    x: 0
+    y: 427
     width: 587.5
     height: 325
   m_SerializedDataModeController:
@@ -1127,8 +1127,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 960
-    y: 78
+    x: 0
+    y: 24
     width: 587.5
     height: 377
   m_SerializedDataModeController:
