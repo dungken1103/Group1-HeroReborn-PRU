@@ -12,6 +12,7 @@ TagManager:
   - Trap
   - EnemyMap1
   - PlayerBullet
+  - Continue
   layers:
   - Default
   - TransparentFX
