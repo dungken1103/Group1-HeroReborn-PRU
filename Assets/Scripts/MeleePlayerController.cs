@@ -2,80 +2,100 @@
 
 public class MeleePlayerController : MonoBehaviour
 {
-    // Bạn có thể chỉnh tốc độ này trong Inspector
     public float moveSpeed = 5f;
-    public float jumpForce = 5f; // Lực nhảy
+    public float jumpForce = 10f;
 
     private Rigidbody2D rb;
-    private Animator animator; // Để đổi animation
+    private Animator animator;
     private float moveInput;
-    private bool isGrounded; // Biến kiểm tra xem có chạm đất không
-    private bool isFacingRight = true; // BiBIến kiểm tra hướng mặt
+    private bool isGrounded;
+    private bool isFacingRight = true;
 
-    // Dùng để kiểm tra "chạm đất"
     public Transform groundCheck;
     public LayerMask groundLayer;
     public float checkRadius = 0.2f;
 
+    [Header("Combat Settings")] // MỚI THÊM
+    public Transform attackPoint; // Điểm tung đòn đánh (cần tạo trong Unity)
+    public float attackRange = 0.5f; // Phạm vi đánh
+    public LayerMask enemyLayer; // Để chỉ đánh trúng Enemy
+    public int attackDamage = 20; // Sát thương của Player
+
     void Start()
     {
+        // Lưu ý: Nếu bạn dùng Unity bản cũ mà báo lỗi linearVelocity, hãy đổi thành .velocity
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>(); // Lấy component Animator
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        // 1. Lấy Input di chuyển (A/D hoặc mũi tên trái/phải)
-        moveInput = Input.GetAxis("Horizontal"); // Trả về giá trị từ -1 đến 1
-
-        // 2. Lấy Input nhảy (Nút Space)
-        // Kiểm tra chạm đất
+        moveInput = Input.GetAxis("Horizontal");
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
+
         if (isGrounded)
         {
-            // Nếu chạm đất, set IsJumping là false
             animator.SetBool("IsJumping", false);
         }
+
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            // Kích hoạt animation nhảy (nếu có)
-            // animator.SetTrigger("Jump"); 
-            animator.SetBool("IsJumping", true); // BÁO CÁO CHO ANIMATOR
+            animator.SetBool("IsJumping", true);
         }
 
-        // 3. Cập nhật Animator
-        // Nếu di chuyển, "Speed" > 0, Animator sẽ chuyển sang state "Walk"
-        // Nếu đứng yên, "Speed" = 0, Animator sẽ chuyển sang state "Idle"
         animator.SetFloat("Speed", Mathf.Abs(moveInput));
-        if (Input.GetKey(KeyCode.J)) 
+
+        // TẤN CÔNG
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            animator.SetTrigger("Attack"); // BÁO CÁO CHO ANIMATOR
+            Attack(); // Gọi hàm tấn công mới
         }
-        // 4. Lật mặt nhân vật
-        if (!isFacingRight && moveInput > 0)
-        {
-            Flip();
-        }
-        else if (isFacingRight && moveInput < 0)
-        {
-            Flip();
-        }
+
+        if (!isFacingRight && moveInput > 0) Flip();
+        else if (isFacingRight && moveInput < 0) Flip();
     }
 
     void FixedUpdate()
     {
-        // 5. Áp dụng vật lý để di chuyển
-        // (Dùng FixedUpdate cho các thao tác vật lý)
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
     }
 
-    // Hàm lật mặt
+    // HÀM TẤN CÔNG MỚI
+    void Attack()
+    {
+        // 1. Chạy animation
+        animator.SetTrigger("Attack");
+
+        // 2. Kiểm tra xem đánh trúng ai (vẽ vòng tròn tại attackPoint)
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+
+        // 3. Gây sát thương cho từng kẻ địch trúng đòn
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("Đã đánh trúng: " + enemy.name);
+            // Lấy script máu của Enemy và gọi hàm TakeDamage
+            MeleeHealthController enemyHealth = enemy.GetComponent<MeleeHealthController>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(attackDamage);
+            }
+        }
+    }
+
     void Flip()
     {
         isFacingRight = !isFacingRight;
         Vector3 scaler = transform.localScale;
-        scaler.x *= -1; // Lật theo trục X
+        scaler.x *= -1;
         transform.localScale = scaler;
+    }
+
+    // Vẽ vòng tròn tấn công để dễ căn chỉnh trong Scene
+    void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }

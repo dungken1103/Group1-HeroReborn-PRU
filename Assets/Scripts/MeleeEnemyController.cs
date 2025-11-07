@@ -2,65 +2,122 @@
 
 public class MeleeEnemyController : MonoBehaviour
 {
-    public int attackDamage = 10;
-    public float attackCooldown = 2f; // Tấn công mỗi 2 giây
-
+    [Header("Movement")]
+    public float moveSpeed = 2f;
+    private Rigidbody2D rb;
     private Animator animator;
-    private MeleeHealthController playerHealth; // Để lưu trữ script Health của Player
-    private bool playerInRange = false; // Player có trong tầm đánh không?
-    private float lastAttackTime = 0f;
+    private bool isFacingRight = true; // Giả sử enemy ban đầu quay sang phải
+
+    [Header("AI Detection")]
+    public float detectionRadius = 8f;  // Tầm nhìn để phát hiện Player
+    public float attackRadius = 1.5f; // Tầm để tấn công
+    public LayerMask playerLayer;      // Báo cho AI biết "Player" là layer nào
+
+    [Header("Attack")]
+    public int attackDamage = 10;
+    public float attackCooldown = 3f;   // Tấn công mỗi 2 giây
+    private float lastAttackTime = -99f;
+
+    private Transform playerTransform;
+    private MeleeHealthController playerHealth;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        // Nếu Player trong tầm và đã đến lúc tấn công
-        if (playerInRange && Time.time > lastAttackTime + attackCooldown)
+        // 1. Tìm kiếm Player
+        Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, detectionRadius, playerLayer);
+
+        if (playerCollider != null)
         {
-            Attack();
+            // Đã thấy Player
+            playerTransform = playerCollider.transform;
+            playerHealth = playerCollider.GetComponent<MeleeHealthController>();
+            Vector2 directionToPlayer = (playerTransform.position - transform.position);
+
+            // 2. Quyết định hành động: Tấn công hay Di chuyển?
+            if (directionToPlayer.magnitude <= attackRadius)
+            {
+                // Đủ gần để tấn công
+                StopMoving();
+                TryAttack();
+            }
+            else
+            {
+                // Quá xa, hãy đuổi theo
+                ChasePlayer(directionToPlayer);
+            }
+        }
+        else
+        {
+            // Không thấy Player
+            playerTransform = null;
+            playerHealth = null;
+            StopMoving();
+        }
+
+        // Lật mặt enemy dựa trên hướng di chuyển
+        FlipTowardsMovement();
+    }
+
+    void ChasePlayer(Vector2 direction)
+    {
+        // Di chuyển theo trục X
+        rb.linearVelocity = new Vector2(Mathf.Sign(direction.x) * moveSpeed, rb.linearVelocity.y);
+        animator.SetFloat("Speed", moveSpeed); // Kích hoạt animation Walk
+    }
+
+    void StopMoving()
+    {
+        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+        animator.SetFloat("Speed", 0); // Quay về animation Idle
+    }
+
+    void TryAttack()
+    {
+        if (Time.time > lastAttackTime + attackCooldown)
+        {
+            lastAttackTime = Time.time;
+            animator.SetTrigger("Attack");
+
+            // Gây sát thương (bạn có thể gọi hàm này qua Animation Event để chính xác hơn)
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(attackDamage);
+            }
         }
     }
 
-    // Hàm này được gọi khi có gì đó đi vào "vùng nhận diện" (cái Circle Collider lớn)
-    void OnTriggerEnter2D(Collider2D other)
+    void FlipTowardsMovement()
     {
-        // Kiểm tra xem có phải Player không
-        if (other.CompareTag("Player"))
+        if (rb.linearVelocity.x > 0.1f && !isFacingRight)
         {
-            Debug.Log("Player da vao vung phat hien!");
-            playerInRange = true;
-            // Lấy script Health của Player để sẵn
-            playerHealth = other.GetComponent<MeleeHealthController>();
+            Flip();
+        }
+        else if (rb.linearVelocity.x < -0.1f && isFacingRight)
+        {
+            Flip();
         }
     }
 
-    // Hàm này được gọi khi Player đi ra khỏi "vùng nhận diện"
-    void OnTriggerExit2D(Collider2D other)
+    void Flip()
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Player da roi khoi vung!");
-            playerInRange = false;
-            playerHealth = null; // Xóa tham chiếu
-        }
+        isFacingRight = !isFacingRight;
+        Vector3 scaler = transform.localScale;
+        scaler.x *= -1;
+        transform.localScale = scaler;
     }
 
-    void Attack()
+    // Vẽ 2 vòng tròn tầm nhìn và tầm đánh (để bạn dễ debug)
+    void OnDrawGizmosSelected()
     {
-        lastAttackTime = Time.time;
-        animator.SetTrigger("Attack"); // Kích hoạt animation "Attack"
-
-        // Gây sát thương
-        if (playerHealth != null)
-        {
-            // Trong thực tế, bạn nên có một hàm (ví dụ: OnAttackFrame)
-            // được gọi từ Animation Event để gây sát thương đúng lúc
-            // Nhưng cách đơn giản là gây sát thương ngay lập tức
-            playerHealth.TakeDamage(attackDamage);
-            Debug.Log("Enemy tan cong Player!");
-        }
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 }
