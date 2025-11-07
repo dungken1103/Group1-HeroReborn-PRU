@@ -12,8 +12,6 @@ TagManager:
   - Trap
   - EnemyMap1
   - PlayerBullet
-  - Explosion
-  - Animal
   layers:
   - Default
   - TransparentFX
@@ -90,6 +88,8 @@ TagManager:
   - name: Animal
     uniqueID: 299563137
     locked: 0
+  - name: New Layer 14
+    uniqueID: 4163731799
   - name: Melee_Background_Far
     uniqueID: 1161064217
     locked: 0

@@ -72,7 +72,7 @@ public class MainMenu : MonoBehaviour
     }
     public void Level1()
     {
-        SceneManager.LoadScene("State 4");
+        SceneManager.LoadScene("Map1");
     }
 
     public void SwiftGame()
