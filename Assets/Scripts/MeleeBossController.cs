@@ -137,10 +137,10 @@ public class MeleeBossController : MonoBehaviour
         transform.localScale = scaler;
 
         // MỚI: Lật cả Attack Point theo
-        if (attackPoint != null)
-        {
-            attackPoint.localPosition = new Vector2(Mathf.Abs(attackPoint.localPosition.x) * (isFacingRight ? 1 : -1), attackPoint.localPosition.y);
-        }
+        //if (attackPoint != null)
+        //{
+        //    attackPoint.localPosition = new Vector2(Mathf.Abs(attackPoint.localPosition.x) * (isFacingRight ? 1 : -1), attackPoint.localPosition.y);
+        //}
     }
 
     // Cập nhật Gizmos để vẽ đúng
