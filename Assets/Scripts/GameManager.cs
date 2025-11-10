@@ -54,7 +54,36 @@ public class GameManager : MonoBehaviour
         GameOver.SetActive(false);
 
         UpdateScoreUI();
+        ActivateAllStages();
     }
+
+    private void ActivateAllStages()
+    {
+        GameObject stageParent = GameObject.Find("Stage");
+        if (stageParent != null)
+        {
+            foreach (Transform map in stageParent.transform)
+            {
+                map.gameObject.SetActive(true);
+
+                // Bật lại toàn bộ Collider & MonoBehaviour trong map
+                foreach (var mb in map.GetComponentsInChildren<MonoBehaviour>(true))
+                    mb.enabled = true;
+
+                foreach (var col in map.GetComponentsInChildren<Collider2D>(true))
+                    col.enabled = true;
+
+                Debug.Log($"✅ Bật hoàn toàn {map.name}");
+            }
+
+            Debug.Log("✅ Đã bật tất cả map trong Stage!");
+        }
+        else
+        {
+            Debug.LogWarning("⚠ Không tìm thấy object 'Stage' trong Scene!");
+        }
+    }
+
 
     public void AddScore(int points)
     {
@@ -123,6 +152,19 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         Invoke(nameof(NewRound), 3f);
         
+    }
+
+    public void ContinueGame()
+    {
+        Time.timeScale = 1f;
+        winGame.SetActive(false);
+        messengerGame.SetActive(false);
+        GameObject[] continueButtons = GameObject.FindGameObjectsWithTag("Continue");
+        foreach (GameObject btn in continueButtons)
+        {
+            btn.SetActive(false);
+        }
+        Debug.Log("▶ Tiếp tục chơi sau khi thắng, ẩn popup.");
     }
 
     public void changeState()

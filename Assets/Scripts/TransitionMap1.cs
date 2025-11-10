@@ -9,7 +9,7 @@ public class TransitionMap1 : MonoBehaviour
     Animator anim;
     Collider2D col;
     bool used = false;
-
+    private GameManagerMap1 gameManager;
     // Biến mới để theo dõi xem ai đang ở bên trong
     private bool isPlayerInside = false;
     private bool isAnimalInside = false;
@@ -19,6 +19,8 @@ public class TransitionMap1 : MonoBehaviour
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
         col.isTrigger = true;
+        gameManager = FindObjectOfType<GameManagerMap1>();
+
     }
 
     // Hàm này được gọi khi có vật thể BẮT ĐẦU va chạm
@@ -56,17 +58,18 @@ public class TransitionMap1 : MonoBehaviour
         }
     }
 
-    // Hàm riêng để kiểm tra điều kiện và mở cửa
     void CheckAndOpenDoor()
     {
-        // Chỉ mở cửa khi CẢ HAI (&&) đều ở bên trong VÀ cửa chưa được dùng
-        if (isPlayerInside && isAnimalInside && !used)
+        int coint = gameManager.GetScore();
+
+        if (isPlayerInside && isAnimalInside && !used && coint == 15)
         {
             used = true;
             col.enabled = false;
             StartCoroutine(OpenThenLoad());
         }
     }
+
 
     System.Collections.IEnumerator OpenThenLoad()
     {

@@ -125,11 +125,11 @@ public class MovementController : MonoBehaviour
             DeathSequence();
             Debug.Log("Player đã chạm vào Enemy và chết");
         }
-        //if (collision.gameObject.CompareTag("Finish"))
-        //{
-        //    winGame.SetActive(true);
-        //    restartGame.SetActive(true);
-        //}
+        if (collision.gameObject.CompareTag("Finish") && haveKey)
+        {
+            winGame.SetActive(true);
+            restartGame.SetActive(true);
+        }
 
 
 
