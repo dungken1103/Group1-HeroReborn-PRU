@@ -65715,7 +65715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831eb314f3e239f488cf13ad4a5e9975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  sceneToLoad: Map2
+  sceneToLoad: Map3
   openStateName: Open
 --- !u!1001 &987581318
 PrefabInstance:

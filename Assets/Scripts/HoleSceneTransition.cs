@@ -34,6 +34,6 @@ public class HoleSceneTransition : MonoBehaviour
         // chờ 5 giây theo thời gian thực
         yield return new WaitForSecondsRealtime(5f);
 
-        SceneManager.LoadScene("Map1");
+        SceneManager.LoadScene(sceneToLoad);
     }
 }
