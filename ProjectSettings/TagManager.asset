@@ -12,6 +12,8 @@ TagManager:
   - Trap
   - EnemyMap1
   - PlayerBullet
+  - Explosion
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -90,6 +92,7 @@ TagManager:
     locked: 0
   - name: New Layer 14
     uniqueID: 4163731799
+    locked: 0
   - name: Melee_Background_Far
     uniqueID: 1161064217
     locked: 0

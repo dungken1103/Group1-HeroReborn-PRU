@@ -12,10 +12,11 @@ public class MeleeHealthController : MonoBehaviour
     public Color playerHealthColor = Color.green;
     public Color enemyHealthColor = Color.red;
 
-    [Header("Effects")] // MỚI THÊM
-    public GameObject hitEffectPrefab; // Kéo prefab hiệu ứng vào đây (máu, tia lửa...)
+    [Header("Effects")]
+    public GameObject hitEffectPrefab;
 
     private Animator animator;
+    private bool isDead = false;
 
     void Start()
     {
@@ -26,7 +27,7 @@ public class MeleeHealthController : MonoBehaviour
             healthSlider.value = currentHealth;
         }
 
-        if (fillImage != null) // Kiểm tra null để tránh lỗi nếu quên kéo
+        if (fillImage != null)
         {
             if (gameObject.CompareTag("Player")) fillImage.color = playerHealthColor;
             else fillImage.color = enemyHealthColor;
@@ -37,18 +38,16 @@ public class MeleeHealthController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        if (isDead) return;
         currentHealth -= amount;
         if (currentHealth < 0) currentHealth = 0;
 
         if (healthSlider != null) healthSlider.value = currentHealth;
 
-        // --- MỚI THÊM: TẠO HIỆU ỨNG ---
         if (hitEffectPrefab != null)
         {
-            // Tạo hiệu ứng ngay tại vị trí nhân vật bị đánh
             Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
         }
-        // -----------------------------
 
         if (currentHealth <= 0)
         {
@@ -58,15 +57,47 @@ public class MeleeHealthController : MonoBehaviour
 
     void Die()
     {
+        if (isDead) return;
+        isDead = true;
+
+        // --- ĐÃ SỬA: Gộp gọn logic báo cáo ---
+        if (MeleeGameManager.Instance != null)
+        {
+            if (gameObject.CompareTag("Player"))
+            {
+                MeleeGameManager.Instance.PlayerDied();
+            }
+            else if (gameObject.CompareTag("Boss"))
+            {
+                MeleeGameManager.Instance.BossDied();
+            }
+            else if (gameObject.CompareTag("Enemy"))
+            {
+                MeleeGameManager.Instance.AddKill();
+            }
+        }
+        // ------------------------------------
+
         if (animator != null) animator.SetTrigger("Dead");
         GetComponent<Collider2D>().enabled = false;
         this.enabled = false;
 
-        // Tắt luôn script điều khiển nếu là enemy để nó ngừng di chuyển
         if (GetComponent<MeleeEnemyController>() != null)
             GetComponent<MeleeEnemyController>().enabled = false;
-        // Tắt script player nếu là player
         if (GetComponent<MeleePlayerController>() != null)
             GetComponent<MeleePlayerController>().enabled = false;
+        // Lưu ý: Boss dùng script MeleeBossController nên cũng cần tắt nó nếu muốn chắc chắn
+        if (GetComponent<MeleeBossController>() != null)
+            GetComponent<MeleeBossController>().enabled = false;
+    }
+
+    public void Heal(int amount)
+    {
+        if (currentHealth <= 0) return;
+        currentHealth += amount;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+
+        if (healthSlider != null) healthSlider.value = currentHealth;
+        Debug.Log(gameObject.name + " đã được hồi " + amount + " máu!");
     }
 }

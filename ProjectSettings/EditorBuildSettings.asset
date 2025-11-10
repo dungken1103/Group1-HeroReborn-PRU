@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Map2.unity
     guid: 67e495a2f7b31524db811ddc20d1ef9e
+  - enabled: 1
+    path: Assets/Scenes/MeleeMap.unity
+    guid: 285005200a6a876408cb41653d835a22
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
