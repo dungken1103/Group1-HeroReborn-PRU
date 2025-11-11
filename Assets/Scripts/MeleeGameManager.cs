@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
-using System.Collections; // Cần cái này để dùng Coroutine
+using System.Collections; 
 
 public class MeleeGameManager : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class MeleeGameManager : MonoBehaviour
     public int enemiesToKill = 5;
     public GameObject bossObject;
     public string mainMenuSceneName = "MainMenu";
-    public int healOnKillAmount = 20; // Lượng máu hồi khi giết địch
+    public int healOnKillAmount = 20;
 
     [Header("UI Panels")]
     public GameObject startPanel;
@@ -23,10 +23,10 @@ public class MeleeGameManager : MonoBehaviour
     [Header("Video Settings")]
     public VideoPlayer videoPlayer;
     public float victoryMessageDuration = 3f;
-    public float delayAfterVideo = 1f; // MỚI: Thời gian chờ sau khi video hết
+    public float delayAfterVideo = 1f; 
 
     private int deadEnemiesCount = 0;
-    private MeleeHealthController playerHealth; // Biến lưu script máu của Player
+    private MeleeHealthController playerHealth; 
 
     void Awake()
     {
@@ -47,7 +47,6 @@ public class MeleeGameManager : MonoBehaviour
 
         if (bossObject != null) bossObject.SetActive(false);
 
-        // --- TÌM PLAYER ĐỂ HỒI MÁU ---
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
@@ -59,7 +58,6 @@ public class MeleeGameManager : MonoBehaviour
         {
             Debug.LogError("GM: KHÔNG TÌM THẤY OBJECT CÓ TAG 'Player'!");
         }
-        // -----------------------------
     }
 
     public void StartGameButton()
@@ -83,14 +81,10 @@ public class MeleeGameManager : MonoBehaviour
     public void AddKill()
     {
         deadEnemiesCount++;
-        // Debug.Log("Đã diệt: " + deadEnemiesCount + "/" + enemiesToKill);
-
-        // --- HỒI MÁU KHI GIẾT ĐỊCH ---
         if (playerHealth != null)
         {
             playerHealth.Heal(healOnKillAmount);
         }
-        // -----------------------------
 
         if (deadEnemiesCount >= enemiesToKill)
         {
@@ -126,19 +120,14 @@ public class MeleeGameManager : MonoBehaviour
         videoPlayer.Play();
     }
 
-    // SỬA: Gọi Coroutine thay vì hiện bảng ngay lập tức
     void OnVideoFinished(VideoPlayer vp)
     {
         StartCoroutine(DelayAfterVideoRoutine());
     }
 
-    // MỚI: Coroutine chờ 2 giây sau video
     IEnumerator DelayAfterVideoRoutine()
     {
-        // Lúc này video đã hết, nó sẽ dừng ở khung hình cuối cùng (nếu video player không phải loop)
         yield return new WaitForSecondsRealtime(delayAfterVideo);
-
-        // Sau khi chờ xong thì mới tắt video và hiện bảng chúc mừng
         videoPanel.SetActive(false);
         finalCongratsPanel.SetActive(true);
     }

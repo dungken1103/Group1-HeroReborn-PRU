@@ -60,7 +60,6 @@ public class MeleeHealthController : MonoBehaviour
         if (isDead) return;
         isDead = true;
 
-        // --- ĐÃ SỬA: Gộp gọn logic báo cáo ---
         if (MeleeGameManager.Instance != null)
         {
             if (gameObject.CompareTag("Player"))
@@ -76,8 +75,6 @@ public class MeleeHealthController : MonoBehaviour
                 MeleeGameManager.Instance.AddKill();
             }
         }
-        // ------------------------------------
-
         if (animator != null) animator.SetTrigger("Dead");
         GetComponent<Collider2D>().enabled = false;
         this.enabled = false;
@@ -86,7 +83,7 @@ public class MeleeHealthController : MonoBehaviour
             GetComponent<MeleeEnemyController>().enabled = false;
         if (GetComponent<MeleePlayerController>() != null)
             GetComponent<MeleePlayerController>().enabled = false;
-        // Lưu ý: Boss dùng script MeleeBossController nên cũng cần tắt nó nếu muốn chắc chắn
+
         if (GetComponent<MeleeBossController>() != null)
             GetComponent<MeleeBossController>().enabled = false;
     }

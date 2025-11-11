@@ -7,21 +7,20 @@ public class MeleeBossController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private bool isFacingRight = true;
-    private bool isAttacking = false; // MỚI: Biến "khóa" hướng quay
+    private bool isAttacking = false; 
     [Header("AI Detection")]
-    public float detectionRadius = 8f;  // Tầm nhìn để phát hiện Player
-    public float stopRadius = 1.5f; // SỬA: Tầm đứng lại để đánh (trước là attackRadius)
+    public float detectionRadius = 8f; 
+    public float stopRadius = 1.5f;
     public LayerMask playerLayer;
 
     [Header("Attack")]
-    public Transform attackPoint;       // MỚI: Kéo AttackPoint của Boss vào đây
-    public float attackRange = 1.0f;    // MỚI: Phạm vi của đòn đánh
+    public Transform attackPoint;      
+    public float attackRange = 1.0f;   
     public int attackDamage = 10;
     public float attackCooldown = 3f;
     private float lastAttackTime = -99f;
 
     private Transform playerTransform;
-    // Bỏ playerHealth ở đây, chúng ta sẽ tìm nó khi đánh
 
     void Start()
     {
@@ -31,7 +30,6 @@ public class MeleeBossController : MonoBehaviour
 
     void Update()
     {
-        // 1. Tìm kiếm Player
         Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, detectionRadius, playerLayer);
 
         if (playerCollider != null)
@@ -39,23 +37,18 @@ public class MeleeBossController : MonoBehaviour
             playerTransform = playerCollider.transform;
             Vector2 directionToPlayer = (playerTransform.position - transform.position);
 
-            // 2. Quyết định hành động: Tấn công hay Di chuyển?
-            // SỬA: Dùng stopRadius thay vì attackRadius
             if (directionToPlayer.magnitude <= stopRadius)
             {
-                // Đủ gần để tấn công
                 StopMoving();
-                TryAttackAnimation(); // SỬA: Đổi tên hàm
+                TryAttackAnimation(); 
             }
             else
             {
-                // Quá xa, hãy đuổi theo
                 ChasePlayer(directionToPlayer);
             }
         }
         else
         {
-            // Không thấy Player
             playerTransform = null;
             StopMoving();
         }
@@ -75,20 +68,16 @@ public class MeleeBossController : MonoBehaviour
         animator.SetFloat("Speed", 0);
     }
 
-    // SỬA: Hàm này CHỈ kích hoạt animation
     void TryAttackAnimation()
     {
         if (Time.time > lastAttackTime + attackCooldown)
         {
             lastAttackTime = Time.time;
-            isAttacking = true; // KHOÁ HƯỚNG QUAY LẠI
+            isAttacking = true; 
             animator.SetTrigger("Attack");
-            // XÓA: Bỏ phần gây sát thương tức thì ở đây
         }
     }
 
-    // MỚI: Hàm này sẽ được gọi bởi Animation Event
-    // Nó mới là hàm thực sự gây sát thương
     public void EnemyHitEvent()
     {
         if (attackPoint == null)
@@ -97,10 +86,7 @@ public class MeleeBossController : MonoBehaviour
             return;
         }
 
-        // Vẽ 1 vòng tròn tại attackPoint để tìm Player
         Collider2D playerToHit = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
-
-        // Nếu tìm thấy Player trong tầm đánh
         if (playerToHit != null)
         {
             MeleeHealthController playerHealth = playerToHit.GetComponent<MeleeHealthController>();
@@ -115,13 +101,11 @@ public class MeleeBossController : MonoBehaviour
     void FlipTowardsMovement()
     {
         if (isAttacking) return;
-        // Nếu đang di chuyển
         if (Mathf.Abs(rb.linearVelocity.x) > 0.1f)
         {
             if (rb.linearVelocity.x > 0 && !isFacingRight) Flip();
             else if (rb.linearVelocity.x < 0 && isFacingRight) Flip();
         }
-        // MỚI: Nếu đứng yên, hãy quay mặt về phía Player
         else if (playerTransform != null)
         {
             if (playerTransform.position.x > transform.position.x && !isFacingRight) Flip();
