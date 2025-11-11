@@ -120,30 +120,23 @@ public class MeleeBossController : MonoBehaviour
         scaler.x *= -1;
         transform.localScale = scaler;
 
-        // MỚI: Lật cả Attack Point theo
-        //if (attackPoint != null)
-        //{
-        //    attackPoint.localPosition = new Vector2(Mathf.Abs(attackPoint.localPosition.x) * (isFacingRight ? 1 : -1), attackPoint.localPosition.y);
-        //}
     }
 
-    // Cập nhật Gizmos để vẽ đúng
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius); // Tầm nhìn
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, stopRadius); // Tầm dừng lại
+        Gizmos.DrawWireSphere(transform.position, stopRadius);
 
         if (attackPoint != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(attackPoint.position, attackRange); // Tầm đánh thực tế
+            Gizmos.DrawWireSphere(attackPoint.position, attackRange);
         }
     }
-    // Thêm hàm này vào cuối script MeleeBossController.cs
     public void AttackFinished()
     {
-        isAttacking = false; // Mở khóa, cho phép quay mặt lại bình thường
+        isAttacking = false;
     }
 }
